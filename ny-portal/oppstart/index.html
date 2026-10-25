@@ -304,7 +304,7 @@ button:active,.copy:active,.btn:active,.tile:active{transform:scale(.97)}
   <form id="f-epost" hidden><label>Your email address<input type="email" id="epost" autocomplete="email" required></label>
     <button type="submit" class="ok">Send login link</button>
     <p class="liten"><a href="#" id="til-passord">Log in with password instead</a></p></form>
-  <form id="f-kode" hidden><p style="margin:0">We've sent an email to <b id="sendt-til"></b>. Click the link in the email, or enter the code here:</p>
+  <form id="f-kode" hidden><p style="margin:0">We’ve sent an email to <b id="sendt-til"></b>. Click the link in the email, or enter the code here:</p>
     <label>Code from the email<input inputmode="numeric" autocomplete="one-time-code" id="kode" maxlength="8" required></label>
     <button type="submit" class="ok">Log in</button></form>
   <p class="liten" id="logginn-melding"></p>
@@ -321,7 +321,7 @@ async function last(session){$('logginn').hidden=true;$('laster').hidden=false;
  /* tilgangsreglene i databasen sørger for at man bare får egne sider; ingen rad = ingen tilgang */
  const sti=location.pathname.slice('/ny-portal/'.length).replace(/index\.html$/,'');
  const{data,error}=await SB.from('sider').select('html').eq('kunde_slug',SLUG).eq('sti',sti).maybeSingle();
- if(error){$('laster').textContent='Couldn't load the page. Please reload.';return}
+ if(error){$('laster').textContent='Couldn’t load the page. Please reload.';return}
  if(!data){const{data:b}=await SB.from('brukere').select('id').eq('id',session.user.id).maybeSingle();if(!b)return ingenTilgang();$('laster').textContent='Page not found.';return}
  document.open();document.write(data.html);document.close()}
 /* Passord-bro: samme nøkkel som den gamle portalen (StatiCrypt) lagrer i nettleseren */
@@ -335,7 +335,7 @@ async function bro(hash){try{const r=await fetch(BRO,{method:'POST',headers:{'Co
  if(!r.ok)return null;const t=await r.json();const{data,error}=await SB.auth.setSession(t);return error?null:data.session}catch(e){return null}}
 async function fraGammel(){let h=null;try{h=localStorage.getItem(NOKKEL)}catch(e){}return h?bro(h):null}
 function logginn(melding){$('laster').hidden=true;const i=$('innhold');if(i)i.hidden=true;$('logginn').hidden=false;$('logginn-melding').textContent=melding||''}
-async function ingenTilgang(){await SB.auth.signOut();logginn('This email address doesn't have access to the portal. Email hei@arcads.no if this is wrong.')}
+async function ingenTilgang(){await SB.auth.signOut();logginn('This email address doesn’t have access to the portal. Email hei@arcads.no if this is wrong.')}
 $('f-passord').onsubmit=async e=>{e.preventDefault();$('logginn-melding').textContent='Opening …';
  const h=await hashPassord($('passord').value),s=await bro(h);
  if(!s){$('logginn-melding').textContent='Wrong password';return}
@@ -346,7 +346,7 @@ $('til-passord').onclick=e=>{e.preventDefault();$('f-epost').hidden=true;$('f-ko
 let epost='';
 $('f-epost').onsubmit=async e=>{e.preventDefault();epost=$('epost').value.trim().toLowerCase();$('logginn-melding').textContent='Sending …';
  const{error}=await SB.auth.signInWithOtp({email:epost,options:{shouldCreateUser:false,emailRedirectTo:location.origin+location.pathname}});
- if(error){$('logginn-melding').textContent=/signups|not found|Signups/i.test(error.message)?'This email address doesn't have access. Email hei@arcads.no.':'Noe gikk galt: '+error.message;return}
+ if(error){$('logginn-melding').textContent=/signups|not found|Signups/i.test(error.message)?'This email address doesn’t have access. Email hei@arcads.no.':'Something went wrong: '+error.message;return}
  $('sendt-til').textContent=epost;$('f-epost').hidden=true;$('f-kode').hidden=false;$('logginn-melding').textContent='';$('kode').focus()};
 $('f-kode').onsubmit=async e=>{e.preventDefault();const{data,error}=await SB.auth.verifyOtp({email:epost,token:$('kode').value.trim(),type:'email'});
  if(error){$('logginn-melding').textContent='The code is wrong or has expired. Try again.';return}vis(data.session)};

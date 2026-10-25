@@ -296,7 +296,7 @@ button:active,.copy:active,.btn:active,.tile:active{transform:scale(.97)}
 <nav class="pnav" aria-label="Client portal"><div class="wrap"><a href="/ny-portal/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a><a href="/ny-portal/oppstart/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg><span>Onboarding</span></a><a href="/ny-portal/rapporter/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Reports</span></a><a href="/ny-portal/annonser/" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg><span>Ads</span></a><a href="/ny-portal/avtale/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg><span>Agreement</span></a></div></nav>
 <main class="wrap">
 <div class="page-h"><span class="eyebrow">Ads</span><h1>Your ads</h1>
-<p class="lead">Video and image ads we've made for you.</p></div>
+<p class="lead">Video and image ads we’ve made for you.</p></div>
 <div id="laster" style="padding:30px 0;color:var(--muted)">Loading …</div>
 <div id="logginn" class="card logginn" hidden>
   <h2 style="margin-top:0">Log in</h2>
@@ -306,7 +306,7 @@ button:active,.copy:active,.btn:active,.tile:active{transform:scale(.97)}
   <form id="f-epost" hidden><label>Your email address<input type="email" id="epost" autocomplete="email" required></label>
     <button type="submit" class="ok">Send login link</button>
     <p class="liten"><a href="#" id="til-passord">Log in with password instead</a></p></form>
-  <form id="f-kode" hidden><p style="margin:0">We've sent an email to <b id="sendt-til"></b>. Click the link in the email, or enter the code here:</p>
+  <form id="f-kode" hidden><p style="margin:0">We’ve sent an email to <b id="sendt-til"></b>. Click the link in the email, or enter the code here:</p>
     <label>Code from the email<input inputmode="numeric" autocomplete="one-time-code" id="kode" maxlength="8" required></label>
     <button type="submit" class="ok">Log in</button></form>
   <p class="liten" id="logginn-melding"></p>
@@ -328,7 +328,7 @@ let ads=[],url={},admin=false;const hjem=new Map();
 const fmt=p=>{const m=p.match(/_(\d+)x(\d+)\./);return m?m[1]+':'+m[2]:'annen'};
 function tittel(n,kort){return n.replace(/\s*\((ny versjon)\)\s*$/,(_,v)=>' <span style="font-weight:500;color:var(--muted)">· '+(kort?'ny':v)+'</span>')}
 function lenker(a){return a.filer.filter(f=>f!==a.fil_sti&&f!==a.poster).map(f=>'<a href="'+esc(url[f])+'" target="_blank" rel="noopener">Se '+fmt(f)+'-versjonen</a>')}
-const KNAPPER='<p class="ad-kommentar" hidden></p><div class="ad-act"><button type="button" class="ok">Approve</button><button type="button" class="nei">Don't approve</button></div><form class="ad-endre" hidden><label>What would you like us to change?<textarea aria-label="What would you like us to change?"></textarea></label><button type="submit">Send</button></form>';
+const KNAPPER='<p class="ad-kommentar" hidden></p><div class="ad-act"><button type="button" class="ok">Approve</button><button type="button" class="nei">Don’t approve</button></div><form class="ad-endre" hidden><label>What would you like us to change?<textarea aria-label="What would you like us to change?"></textarea></label><button type="submit">Send</button></form>';
 function kort(a){const el=document.createElement(a.type==='video'?'div':'figure');el.dataset.id=a.id;el.dataset.navn=a.navn;
  const skjult=a.synlig?'':' <span class="chip skjult-chip">Hidden from client</span>';
  if(a.type==='video'){el.className='vidrow ad';el.style.cssText='border:0;background:none';
@@ -344,14 +344,14 @@ function kort(a){const el=document.createElement(a.type==='video'?'div':'figure'
 function plasser(a,el){const c=el.querySelector('.chip'),k=el.querySelector('.ad-kommentar'),act=el.querySelector('.ad-act'),nei=el.querySelector('.nei');
  if(a.status==='godkjent'){c.textContent='Approved';c.className='chip ok';act.hidden=true;k.hidden=true;$('g-ok').appendChild(el)}
  else if(a.status==='ikke_godkjent'){c.textContent='Not approved';c.className='chip';act.hidden=false;k.hidden=false;k.innerHTML='<b>Requested change:</b> '+esc(a.kommentar);nei.textContent='Edit request';$('g-nei').appendChild(el)}
- else{c.textContent='Proposal';c.className='chip';act.hidden=false;k.hidden=true;nei.textContent='Don't approve';hjem.get(a.id).appendChild(el)}
+ else{c.textContent='Proposal';c.className='chip';act.hidden=false;k.hidden=true;nei.textContent='Don’t approve';hjem.get(a.id).appendChild(el)}
  el.classList.toggle('bred',el.classList.contains('vidrow')&&el.parentNode!==hjem.get(a.id))}
 function tell(){document.querySelectorAll('#seksjoner section').forEach(s=>{s.hidden=!s.querySelector('.ad');s.querySelectorAll('[data-del]').forEach(d=>{const g=d.nextElementSibling;d.hidden=g.hidden=!g.children.length})});
  $('sec-nei').hidden=!$('g-nei').children.length;$('sec-ok').hidden=!$('g-ok').children.length;
  const b=document.querySelector('.pnav a.on .badge'),n=ads.filter(a=>a.synlig&&a.status==='forslag').length;if(b){b.textContent=n;b.hidden=!n}}
 async function lagre(a,status,kommentar){const forrige={status:a.status,kommentar:a.kommentar};a.status=status;a.kommentar=kommentar||null;plasser(a,document.querySelector('[data-id="'+a.id+'"]'));tell();
  const{error}=await SB.from('annonser').update({status,kommentar:kommentar||null}).eq('id',a.id);
- if(error){Object.assign(a,forrige);plasser(a,document.querySelector('[data-id="'+a.id+'"]'));tell();alert('Couldn't save. Try again, or email hei@arcads.no.');return}
+ if(error){Object.assign(a,forrige);plasser(a,document.querySelector('[data-id="'+a.id+'"]'));tell();alert('Couldn’t save. Try again, or email hei@arcads.no.');return}
  if(!admin){const st={};ads.filter(x=>x.nokkel&&x.status!=='forslag').forEach(x=>st[x.nokkel]={status:x.status,kommentar:x.kommentar||'',tid:new Date().toISOString()});
   fetch(HOOK,{method:'POST',mode:'no-cors',body:new URLSearchParams({handling:'lagre',kunde:SLUG,bedrift:BEDRIFT,annonse:a.navn,status,kommentar:kommentar||'',statuser:JSON.stringify(st)})}).catch(()=>{})}}
 let startet=null;
@@ -361,7 +361,7 @@ async function last(session){$('logginn').hidden=true;
  admin=b&&b.rolle==='admin';
  if(!b||(!admin&&b.kunde_slug!==SLUG))return ingenTilgang();
  const{data,error}=await SB.from('annonser').select('*').eq('kunde_slug',SLUG).order('rekkefolge');
- if(error){$('laster').textContent='Couldn't load the ads. Please reload.';return}
+ if(error){$('laster').textContent='Couldn’t load the ads. Please reload.';return}
  ads=data;const stier=[...new Set(ads.flatMap(a=>[...a.filer,a.fil_sti,a.poster]).filter(Boolean))];
  for(let i=0;i<stier.length;i+=100){const{data:s}=await SB.storage.from('annonser').createSignedUrls(stier.slice(i,i+100),6*3600);(s||[]).forEach(x=>{if(x.signedUrl)url[x.path]=x.signedUrl})}
  const rot=$('seksjoner');rot.innerHTML='';$('g-ok').innerHTML='';$('g-nei').innerHTML='';hjem.clear();const sek={};
@@ -381,7 +381,7 @@ async function bro(hash){try{const r=await fetch(BRO,{method:'POST',headers:{'Co
  if(!r.ok)return null;const t=await r.json();const{data,error}=await SB.auth.setSession(t);return error?null:data.session}catch(e){return null}}
 async function fraGammel(){let h=null;try{h=localStorage.getItem(NOKKEL)}catch(e){}return h?bro(h):null}
 function logginn(melding){$('laster').hidden=true;const i=$('innhold');if(i)i.hidden=true;$('logginn').hidden=false;$('logginn-melding').textContent=melding||''}
-async function ingenTilgang(){await SB.auth.signOut();logginn('This email address doesn't have access to the portal. Email hei@arcads.no if this is wrong.')}
+async function ingenTilgang(){await SB.auth.signOut();logginn('This email address doesn’t have access to the portal. Email hei@arcads.no if this is wrong.')}
 $('f-passord').onsubmit=async e=>{e.preventDefault();$('logginn-melding').textContent='Opening …';
  const h=await hashPassord($('passord').value),s=await bro(h);
  if(!s){$('logginn-melding').textContent='Wrong password';return}
@@ -392,7 +392,7 @@ $('til-passord').onclick=e=>{e.preventDefault();$('f-epost').hidden=true;$('f-ko
 let epost='';
 $('f-epost').onsubmit=async e=>{e.preventDefault();epost=$('epost').value.trim().toLowerCase();$('logginn-melding').textContent='Sending …';
  const{error}=await SB.auth.signInWithOtp({email:epost,options:{shouldCreateUser:false,emailRedirectTo:location.origin+location.pathname}});
- if(error){$('logginn-melding').textContent=/signups|not found|Signups/i.test(error.message)?'This email address doesn't have access. Email hei@arcads.no.':'Noe gikk galt: '+error.message;return}
+ if(error){$('logginn-melding').textContent=/signups|not found|Signups/i.test(error.message)?'This email address doesn’t have access. Email hei@arcads.no.':'Something went wrong: '+error.message;return}
  $('sendt-til').textContent=epost;$('f-epost').hidden=true;$('f-kode').hidden=false;$('logginn-melding').textContent='';$('kode').focus()};
 $('f-kode').onsubmit=async e=>{e.preventDefault();const{data,error}=await SB.auth.verifyOtp({email:epost,token:$('kode').value.trim(),type:'email'});
  if(error){$('logginn-melding').textContent='The code is wrong or has expired. Try again.';return}vis(data.session)};
