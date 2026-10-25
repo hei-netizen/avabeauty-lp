@@ -1,7 +1,7 @@
 {
  "name": "AVA Beauty × Arcads",
  "short_name": "AVA Beauty",
- "lang": "no",
+ "lang": "en",
  "start_url": "/portal/",
  "scope": "/",
  "display": "standalone",
